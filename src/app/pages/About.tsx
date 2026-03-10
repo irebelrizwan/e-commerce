@@ -4,7 +4,7 @@ import { Zap, Heart, Globe, Award } from "lucide-react";
 export function About() {
   return (
     <div className="min-h-screen">
-      {/* Hero */}
+      {/* Hero section */}
       <section className="bg-gray-950 text-white py-24">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-white mb-4" style={{ fontWeight: 800, fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
