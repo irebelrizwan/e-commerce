@@ -4,6 +4,7 @@ import { ShoppingCart, Heart, Search, Menu, X, Zap, User, LogOut, ChevronDown } 
 import { useCart } from "../store/cartStore";
 import { useAuth } from "../store/authStore";
 import { AuthModal } from "./AuthModal";
+import logo from "./photos/elogo.png";
 
 interface NavbarProps {
   onCartOpen: () => void;
@@ -44,11 +45,8 @@ export function Navbar({ onCartOpen, searchQuery, onSearchChange }: NavbarProps)
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
-                <Zap size={16} className="text-white" fill="white" />
-              </div>
-              <span className="text-xl tracking-tight text-gray-900" style={{ fontWeight: 700 }}>LUXE</span>
+            <Link to="/" className="flex items-center">
+              <img src={logo} alt="Origin E-Commerce" className="h-26 w-auto paddingtop-20" />
             </Link>
 
             {/* Desktop Nav */}
