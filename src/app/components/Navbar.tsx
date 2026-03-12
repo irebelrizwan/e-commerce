@@ -160,7 +160,7 @@ export function Navbar({ onCartOpen, searchQuery, onSearchChange }: NavbarProps)
                     </button>
                     <button
                       onClick={() => setAuthModal({ open: true, mode: "register" })}
-                      className="text-sm text-white bg-black px-4 py-1.5 rounded-full hover:bg-gray-800 transition"
+                      className="text-sm text-white bg-[#099EE9] px-4 py-1.5 rounded-full hover:bg-[#0B7FC6] transition"
                       style={{ fontWeight: 600 }}
                     >
                       Register

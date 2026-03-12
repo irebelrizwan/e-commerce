@@ -10,7 +10,7 @@ export function Home() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gray-950 text-white">
+      <section className="bg-gradient-to-r from-[#2C1446] via-[#1C1921] to-[#1A1A1A] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32 grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <span className="inline-block bg-white/10 text-white text-xs px-3 py-1.5 rounded-full tracking-widest uppercase">
@@ -64,20 +64,22 @@ export function Home() {
       {/* Categories */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-gray-900 mb-8 text-center" style={{ fontWeight: 700, fontSize: "1.75rem" }}>
+          <h2 className="text-[#099EE9] mb-8 text-center" style={{ fontWeight: 700, fontSize: "1.75rem" }}>
             Shop by Category
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {["Electronics", "Footwear", "Clothing", "Accessories", "Bags", "Beauty"].map((cat) => (
-              <Link
-                key={cat}
-                to={`/shop?category=${cat}`}
-                className="flex flex-col items-center gap-2 p-4 bg-gray-50 rounded-2xl hover:bg-black hover:text-white transition-all duration-200 group text-center"
-              >
-                <span className="text-sm group-hover:text-white text-gray-700" style={{ fontWeight: 500 }}>{cat}</span>
-              </Link>
-            ))}
-          </div>
+          {["Electronics", "Footwear", "Clothing", "Accessories", "Bags", "Beauty"].map((cat) => (
+            <Link
+              key={cat}
+              to={`/shop?category=${cat}`}
+              className="flex flex-col items-center gap-2 p-4 bg-gray-50 rounded-2xl hover:bg-[#099EE9] hover:text-white transition-all duration-200 group text-center"
+            >
+              <span className="text-sm group-hover:text-white text-gray-700" style={{ fontWeight: 500 }}>
+                {cat}
+              </span>
+            </Link>
+          ))}
+        </div>
         </div>
       </section>
 
@@ -106,7 +108,7 @@ export function Home() {
       {/* Promo Banner */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-gray-900 to-gray-700 rounded-3xl p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="bg-gradient-to-r from-[#2C1446] via-[#1C1921] to-[#1A1A1A] rounded-3xl p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-8 text-white">
             <div className="text-white text-center md:text-left">
               <p className="text-purple-400 text-sm uppercase tracking-widest mb-2" style={{ fontWeight: 600 }}>Limited Time</p>
               <h3 className="text-white mb-3" style={{ fontWeight: 800, fontSize: "2rem" }}>
