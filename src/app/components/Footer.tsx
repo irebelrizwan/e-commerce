@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 import { Zap, Instagram, Twitter, Facebook } from "lucide-react";
+import elogowhite from "./photos/elogowhite.png";
 
 export function Footer() {
   return (
@@ -9,12 +10,10 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
           <div className="col-span-1 md:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
-                <Zap size={16} className="text-black" fill="black" />
-              </div>
-              <span className="text-white text-xl" style={{ fontWeight: 700 }}>LUXE</span>
+              <img src={elogowhite} alt="Origin E-Commerce" className="h-40 w-auto object-contain" />
+
             </Link>
-            <p className="text-sm leading-relaxed max-w-sm">
+            <p className="text-sm leading-relaxed max-w-2`xl">
               Premium products for modern living. Curated with care, delivered with love.
             </p>
             <div className="flex gap-4 mt-5">
@@ -50,7 +49,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-          <p>© 2026 LUXE. All rights reserved.</p>
+          <p>© 2026 Origin. All rights reserved.</p>
           <p>Made with ♥ for great products</p>
         </div>
       </div>

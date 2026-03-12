@@ -15,7 +15,7 @@ export const products: Product[] = [
   },
   {
     id: 2,
-    name: "Luxe Minimalist Watch",
+    name: "Origin Minimalist Watch",
     price: 249.00,
     image: "https://images.unsplash.com/photo-1758887953059-ca6f8e454207?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pbWFsaXN0JTIwd2F0Y2glMjBhY2Nlc3Nvcmllc3xlbnwxfHx8fDE3NzI3ODY3OTF8MA&ixlib=rb-4.1.0&q=80&w=600",
     category: "Accessories",

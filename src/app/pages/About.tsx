@@ -8,7 +8,7 @@ export function About() {
       <section className="bg-gray-950 text-white py-24">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-white mb-4" style={{ fontWeight: 800, fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
-            About LUXE
+            About Origin
           </h1>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
             We're on a mission to make premium lifestyle products accessible to everyone who appreciates quality, design, and craftsmanship.

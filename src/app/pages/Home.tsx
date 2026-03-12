@@ -112,7 +112,7 @@ export function Home() {
               <h3 className="text-white mb-3" style={{ fontWeight: 800, fontSize: "2rem" }}>
                 Up to 40% Off<br />Selected Items
               </h3>
-              <p className="text-gray-400">Use code <span className="text-white" style={{ fontWeight: 700 }}>LUXE40</span> at checkout</p>
+              <p className="text-gray-400">Use code <span className="text-white" style={{ fontWeight: 700 }}>Origin40</span> at checkout</p>
             </div>
             <Link
               to="/shop"

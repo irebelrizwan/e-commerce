@@ -14,7 +14,7 @@ interface AuthStore {
 
 // Mock user store (simulates a small "database" of registered users)
 const registeredUsers: { name: string; email: string; password: string }[] = [
-  { name: "Demo User", email: "demo@luxe.com", password: "password" },
+  { name: "Demo User", email: "demo@Origin.com", password: "password" },
 ];
 
 export const useAuth = create<AuthStore>((set) => ({

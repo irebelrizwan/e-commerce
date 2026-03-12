@@ -77,15 +77,15 @@ export function AuthModal({ open, mode, onClose, onSwitchMode }: AuthModalProps)
             </h2>
             <p className="text-sm text-gray-400 mt-1">
               {mode === "login"
-                ? "Sign in to your LUXE account"
-                : "Join LUXE and start shopping"}
+                ? "Sign in to your Origin account"
+                : "Join Origin and start shopping"}
             </p>
           </div>
 
           {/* Demo hint */}
           {mode === "login" && (
             <div className="bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 mb-5 text-xs text-gray-500">
-              Demo: <span className="text-gray-700 font-medium">demo@luxe.com</span> / <span className="text-gray-700 font-medium">password</span>
+              Demo: <span className="text-gray-700 font-medium">demo@Origin.com</span> / <span className="text-gray-700 font-medium">password</span>
             </div>
           )}
 
