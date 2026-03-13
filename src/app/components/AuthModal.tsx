@@ -148,7 +148,7 @@ export function AuthModal({ open, mode, onClose, onSwitchMode }: AuthModalProps)
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-black text-white py-3 rounded-xl text-sm flex items-center justify-center gap-2 hover:bg-gray-800 transition disabled:opacity-60"
+              className="w-full bg-[#099EE9] text-white py-3 rounded-xl text-sm flex items-center justify-center gap-2 hover:bg-gray-800 transition disabled:opacity-60"
               style={{ fontWeight: 600 }}
             >
               {loading && <Loader2 size={15} className="animate-spin" />}

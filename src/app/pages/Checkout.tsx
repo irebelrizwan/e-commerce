@@ -34,7 +34,7 @@ export function Checkout() {
           </p>
           <Link
             to="/"
-            className="inline-block bg-black text-white px-8 py-3.5 rounded-full text-sm hover:bg-gray-800 transition"
+            className="inline-block bg-[#099EE9] text-white px-8 py-3.5 rounded-full text-sm hover:bg-gray-800 transition"
             style={{ fontWeight: 600 }}
           >
             Back to Home
@@ -170,7 +170,7 @@ export function Checkout() {
 
             <button
               type="submit"
-              className="w-full bg-black text-white py-4 rounded-full text-sm hover:bg-gray-800 transition"
+              className="w-full bg-[#099EE9] text-white py-4 rounded-full text-sm hover:bg-gray-800 transition"
               style={{ fontWeight: 700 }}
             >
               Place Order — ${cartTotal.toFixed(2)}

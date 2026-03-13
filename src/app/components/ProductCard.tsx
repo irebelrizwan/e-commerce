@@ -73,7 +73,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
           <button
             onClick={() => addToCart(product)}
-            className="flex items-center gap-1.5 bg-black text-white text-xs px-3 py-2 rounded-full hover:bg-gray-800 transition-colors"
+            className="flex items-center gap-1.5 bg-[#099EE9] text-white text-xs px-3 py-2 rounded-full hover:bg-gray-800 transition-colors"
           >
             <ShoppingCart size={13} />
             Add

@@ -169,7 +169,7 @@ export function Home() {
               { icon: Headphones, title: "24/7 Support", desc: "Always here to help" },
             ].map(({ icon: Icon, title, desc }) => (
               <div key={title} className="flex flex-col items-center gap-3">
-                <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-[#099EE9] rounded-full flex items-center justify-center">
                   <Icon size={20} className="text-white" />
                 </div>
                 <div>
