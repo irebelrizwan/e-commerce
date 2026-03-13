@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router";
 import { ShoppingCart, Heart, Search, Menu, X, Zap, User, LogOut, ChevronDown } from "lucide-react";
 import { useCart } from "../store/cartStore";
 import { useAuth } from "../store/authStore";
-import { AuthModal } from "./AuthModal";
+
 import logo from "./photos/elogo.png";
 
 interface NavbarProps {
@@ -57,7 +57,7 @@ export function Navbar({ onCartOpen, searchQuery, onSearchChange }: NavbarProps)
                   to={link.to}
                   className={`text-sm transition-colors ${
                     location.pathname === link.to
-                      ? "text-black border-b-2 border-black pb-0.5"
+                      ? "text-black border-b-2 border-[#099EE9] pb-0.5"
                       : "text-gray-500 hover:text-black"
                   }`}
                 >

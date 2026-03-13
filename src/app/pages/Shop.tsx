@@ -82,7 +82,7 @@ export function Shop({ searchQuery }: ShopProps) {
                 step={10}
                 value={priceRange[1]}
                 onChange={(e) => setPriceRange([0, Number(e.target.value)])}
-                className="w-full accent-black"
+                className="w-full accent-[#099EE9]"
               />
               <div className="flex justify-between text-xs text-gray-400 mt-1">
                 <span>$0</span>
@@ -100,8 +100,8 @@ export function Shop({ searchQuery }: ShopProps) {
               onClick={() => setActiveCategory(cat)}
               className={`px-4 py-2 rounded-full text-sm transition ${
                 activeCategory === cat
-                  ? "bg-black text-white"
-                  : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
+                  ? "bg-[#099EE9] text-white"
+                  : "bg-white text-gray-600 border border-gray-200 hover:bg-[#099EE9] hover:text-white"
               }`}
             >
               {cat}
