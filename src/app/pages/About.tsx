@@ -30,7 +30,7 @@ export function About() {
               { icon: Award, title: "Quality", desc: "Every product is rigorously curated to meet our high standards." },
             ].map(({ icon: Icon, title, desc }) => (
               <div key={title} className="p-6 bg-gray-50 rounded-2xl text-center">
-                <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-12 h-12 bg-[#099EE9] rounded-full flex items-center justify-center mx-auto mb-4">
                   <Icon size={20} className="text-white" />
                 </div>
                 <h3 className="text-gray-900 mb-2" style={{ fontWeight: 700 }}>{title}</h3>
