@@ -31,7 +31,7 @@ export function Wishlist() {
             </div>
             <Link
               to="/shop"
-              className="bg-black text-white px-6 py-2.5 rounded-full text-sm hover:bg-gray-800 transition"
+              className="bg-[#099EE9] text-white px-6 py-2.5 rounded-full text-sm hover:bg-gray-800 transition"
               style={{ fontWeight: 600 }}
             >
               Browse Products

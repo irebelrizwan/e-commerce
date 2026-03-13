@@ -54,7 +54,7 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
               </div>
               <button
                 onClick={onClose}
-                className="mt-2 bg-black text-white px-6 py-2.5 rounded-full text-sm hover:bg-gray-800 transition"
+                className="mt-2 bg-[#099EE9] text-white px-6 py-2.5 rounded-full text-sm hover:bg-gray-800 transition"
               >
                 Continue Shopping
               </button>
@@ -118,7 +118,7 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
             <Link
               to="/checkout"
               onClick={onClose}
-              className="block w-full bg-black text-white text-center py-3.5 rounded-full hover:bg-gray-800 transition text-sm"
+              className="block w-full bg-[#099EE9] text-white text-center py-3.5 rounded-full hover:bg-gray-800 transition text-sm"
               style={{ fontWeight: 600 }}
             >
               Checkout
