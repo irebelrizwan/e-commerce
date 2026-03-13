@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router";
 import { ShoppingCart, Heart, Search, Menu, X, Zap, User, LogOut, ChevronDown } from "lucide-react";
 import { useCart } from "../store/cartStore";
 import { useAuth } from "../store/authStore";
+import { AuthModal } from "./AuthModal";
 
 import logo from "./photos/elogo.png";
 
