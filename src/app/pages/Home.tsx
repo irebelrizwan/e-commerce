@@ -1,10 +1,41 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router";
 import { ArrowRight, ShieldCheck, Truck, RefreshCw, Headphones } from "lucide-react";
 import { products } from "../data/products";
 import { ProductCard } from "../components/ProductCard";
 
 export function Home() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  useEffect(() => {
+  const interval = setInterval(() => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  }, 4000);
+
+  return () => clearInterval(interval);
+}, []);
+  const slides = [
+  {
+    badge: "New Collection 2026",
+    title1: "Elevate Your",
+    title2: "Personal Style",
+    desc: "Discover curated collections of premium fashion, electronics, and accessories — crafted for the modern lifestyle.",
+    image: products[3].image
+  },
+  {
+    badge: "Trending Electronics",
+    title1: "Upgrade Your",
+    title2: "Smart Living",
+    desc: "Explore cutting-edge gadgets and premium electronics designed for modern convenience.",
+    image: products[1].image
+  },
+  {
+    badge: "Fashion Picks",
+    title1: "Style Meets",
+    title2: "Comfort",
+    desc: "Step into a world of trendy fashion and accessories tailored for everyday elegance.",
+    image: products[2].image
+  }
+];
   const featured = products.slice(0, 4);
 
   return (
@@ -14,16 +45,16 @@ export function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32 grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <span className="inline-block bg-white/10 text-white text-xs px-3 py-1.5 rounded-full tracking-widest uppercase">
-              New Collection 2026
+              {slides[currentSlide].badge}
             </span>
             <h1 className="text-white" style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 800, lineHeight: 1.1 }}>
-              Elevate Your<br />
+              {slides[currentSlide].title1}<br />
               <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Personal Style
+                {slides[currentSlide].title2}
               </span>
             </h1>
             <p className="text-gray-400 text-lg max-w-md">
-              Discover curated collections of premium fashion, electronics, and accessories — crafted for the modern lifestyle.
+              {slides[currentSlide].desc}
             </p>
             <div className="flex flex-wrap gap-4">
               <Link
@@ -46,7 +77,7 @@ export function Home() {
             <div className="relative w-full aspect-square max-w-lg mx-auto">
               <div className="absolute inset-0 bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-3xl blur-3xl" />
               <img
-                src={products[3].image}
+                src={slides[currentSlide].image}
                 alt="Featured product"
                 className="relative rounded-3xl object-cover w-full h-full shadow-2xl"
               />
