@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router";
 import { Heart, ShoppingCart, Star } from "lucide-react";
 import { Product, useCart } from "../store/cartStore";
+import toast from "react-hot-toast";
 
 interface ProductCardProps {
   product: Product;
@@ -33,7 +34,15 @@ export function ProductCard({ product }: ProductCardProps) {
           </span>
         )}
         <button
-          onClick={() => toggleWishlist(product.id)}
+          onClick={() => {
+            if (!isWishlisted) {
+              toggleWishlist(product.id);
+              toast.success("Added to wishlist");
+            } else {
+              toggleWishlist(product.id);
+              toast("Removed from wishlist");
+            }
+          }}
           className="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-all duration-200 hover:scale-110"
         >
           <Heart
@@ -72,7 +81,10 @@ export function ProductCard({ product }: ProductCardProps) {
             )}
           </div>
           <button
-            onClick={() => addToCart(product)}
+            onClick={() => {
+              addToCart(product);
+              toast.success("Added to cart");
+            }}
             className="flex items-center gap-1.5 bg-[#099EE9] text-white text-xs px-3 py-2 rounded-full hover:bg-gray-800 transition-colors"
           >
             <ShoppingCart size={13} />

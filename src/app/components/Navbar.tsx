@@ -39,7 +39,7 @@ export function Navbar({ onCartOpen, searchQuery, onSearchChange }: NavbarProps)
     { label: "Shop", to: "/shop" },
     { label: "About", to: "/about" },
   ];
-
+     
   return (
     <>
       <nav className="sticky top-0 z-50 bg-white border-b-5 border-[#099EE9] shadow-sm">
