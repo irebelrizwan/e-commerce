@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { ArrowRight, ShieldCheck, Truck, RefreshCw, Headphones } from "lucide-react";
 import { products } from "../data/products";
 import { ProductCard } from "../components/ProductCard";
-
+import { ChevronLeft, ChevronRight } from "lucide-react";
 export function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   useEffect(() => {
@@ -13,6 +13,13 @@ export function Home() {
 
   return () => clearInterval(interval);
 }, []);
+const nextSlide = () => {
+  setCurrentSlide((prev) => (prev + 1) % slides.length);
+};
+
+const prevSlide = () => {
+  setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+};
   const slides = [
   {
     badge: "New Collection 2026",
@@ -41,7 +48,22 @@ export function Home() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-r from-[#2C1446] via-[#1C1921] to-[#1A1A1A] text-white">
+      <section className="relative bg-gradient-to-r from-[#2C1446] via-[#1C1921] to-[#1A1A1A] text-white">
+              {/* LEFT BUTTON */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white w-10 h-10 rounded-full flex items-center justify-center backdrop-blur transition z-10"
+        >
+          <ChevronLeft size={22} />
+        </button>
+
+        {/* RIGHT BUTTON */}
+        <button
+          onClick={nextSlide}
+          className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white w-10 h-10 rounded-full flex items-center justify-center backdrop-blur transition z-10"
+        >
+          <ChevronRight size={22} />
+        </button>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32 grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <span className="inline-block bg-white/10 text-white text-xs px-3 py-1.5 rounded-full tracking-widest uppercase">
