@@ -68,8 +68,10 @@ export function Navbar({ onCartOpen, searchQuery, onSearchChange }: NavbarProps)
             </div>
 
             {/* Search bar (desktop) */}
-            <div className="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-56">
-              <Search size={15} className="text-gray-400 mr-2 shrink-0" />
+            
+              
+            <div className="flex items-center bg-gray-100 rounded-full px-4 py-2 w-full max-w-xl shadow-sm focus-within:ring-2 focus-within:ring-[#099EE9] transition">
+              <Search size={18} className="text-gray-500 mr-2" />
               <input
                 type="text"
                 placeholder="Search products..."
@@ -78,6 +80,7 @@ export function Navbar({ onCartOpen, searchQuery, onSearchChange }: NavbarProps)
                 className="bg-transparent text-sm outline-none w-full text-gray-700 placeholder-gray-400"
               />
             </div>
+        
 
             {/* Right icons */}
             <div className="flex items-center gap-1">
