@@ -3,14 +3,20 @@ import { RouterProvider } from "react-router";
 import { CartProvider } from "./store/cartStore";
 import { router } from "./routes";
 import { Toaster } from "react-hot-toast";
+import { useInitializeAuth } from "./hooks/useInitializeAuth";
 
+function AppContent() {
+  // Initialize auth session on app load
+  useInitializeAuth();
 
-
-export default function App() {
   return (
     <CartProvider>
       <Toaster position="top-right" />
       <RouterProvider router={router} />
     </CartProvider>
   );
+}
+
+export default function App() {
+  return <AppContent />;
 }

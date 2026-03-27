@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
 export interface Product {
   id: number;
@@ -27,13 +27,40 @@ interface CartContextType {
   cartCount: number;
   cartTotal: number;
   clearCart: () => void;
+  setUserCart: (cart: CartItem[], wishlist: number[]) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
+const CART_KEY = "user_cart";
+const WISHLIST_KEY = "user_wishlist";
+
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<number[]>([]);
+
+  // Load cart from localStorage on mount
+  useEffect(() => {
+    const savedCart = localStorage.getItem(CART_KEY);
+    const savedWishlist = localStorage.getItem(WISHLIST_KEY);
+
+    if (savedCart) {
+      setCart(JSON.parse(savedCart));
+    }
+    if (savedWishlist) {
+      setWishlist(JSON.parse(savedWishlist));
+    }
+  }, []);
+
+  // Save cart to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  }, [cart]);
+
+  // Save wishlist to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlist));
+  }, [wishlist]);
 
   const addToCart = (product: Product) => {
     setCart((prev) => {
@@ -70,11 +97,19 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   const cartTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  const clearCart = () => setCart([]);
+  const clearCart = () => {
+    setCart([]);
+    localStorage.removeItem(CART_KEY);
+  };
+
+  const setUserCart = (newCart: CartItem[], newWishlist: number[]) => {
+    setCart(newCart);
+    setWishlist(newWishlist);
+  };
 
   return (
     <CartContext.Provider
-      value={{ cart, wishlist, addToCart, removeFromCart, updateQuantity, toggleWishlist, cartCount, cartTotal, clearCart }}
+      value={{ cart, wishlist, addToCart, removeFromCart, updateQuantity, toggleWishlist, cartCount, cartTotal, clearCart, setUserCart }}
     >
       {children}
     </CartContext.Provider>
