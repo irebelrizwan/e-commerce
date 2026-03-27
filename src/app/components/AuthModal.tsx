@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { X, Eye, EyeOff, Loader2 } from "lucide-react";
+import { useNavigate } from "react-router";
 import { useAuth } from "../store/authStore";
 
 interface AuthModalProps {
@@ -10,6 +11,7 @@ interface AuthModalProps {
 }
 
 export function AuthModal({ open, mode, onClose, onSwitchMode }: AuthModalProps) {
+  const navigate = useNavigate();
   const { login, register } = useAuth();
 
   const [name, setName] = useState("");
@@ -43,6 +45,8 @@ export function AuthModal({ open, mode, onClose, onSwitchMode }: AuthModalProps)
     } else {
       reset();
       onClose();
+      // Navigate to home page after successful login/registration
+      navigate("/home");
     }
   };
 
