@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { createBrowserRouter, Outlet, useOutletContext, Navigate } from "react-router";
+import React, { useState, useEffect } from "react";
+import { createBrowserRouter, Outlet, useOutletContext, Navigate, useLocation, useNavigate } from "react-router";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { CartDrawer } from "./components/CartDrawer";
@@ -17,12 +17,21 @@ import { useInitializeAuth } from "./hooks/useInitializeAuth";
 type RootContext = { searchQuery: string };
 
 function RootLayout() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const { isAuthenticated, isInitializing } = useAuth();
   const [cartOpen, setCartOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   // Initialize auth on root mount
   useInitializeAuth();
+
+  // Redirect to landing page if user logs out while on a protected route
+  useEffect(() => {
+    if (!isAuthenticated && location.pathname.startsWith("/home")) {
+      navigate("/", { replace: true });
+    }
+  }, [isAuthenticated, location.pathname, navigate]);
 
   // Show loading state while initializing
   if (isInitializing) {
