@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { ShoppingCart, Heart, Search, Menu, X, ChevronDown, LogOut } from "lucide-react";
 import { useCart } from "../store/cartStore";
 import { useAuth } from "../store/authStore";
@@ -15,6 +15,7 @@ interface NavbarProps {
 }
 
 export function Navbar({ onCartOpen, searchQuery, onSearchChange }: NavbarProps) {
+  const navigate = useNavigate();
   const { cartCount, wishlist } = useCart();
   const { user, logout: authLogout } = useAuth();
 
@@ -28,10 +29,11 @@ export function Navbar({ onCartOpen, searchQuery, onSearchChange }: NavbarProps)
   const location = useLocation();
   const userMenuRef = useRef<HTMLDivElement>(null);
 
-  // Handle logout - auth state change triggers cart sync
+  // Handle logout - auth state change triggers cart sync and redirect to landing page
   const handleLogout = () => {
     authLogout();
     setUserMenuOpen(false);
+    navigate("/");
   };
 
   // Close user dropdown
