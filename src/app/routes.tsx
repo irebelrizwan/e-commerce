@@ -3,7 +3,6 @@ import { createBrowserRouter, Outlet, useOutletContext, Navigate } from "react-r
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { CartDrawer } from "./components/CartDrawer";
-import { ProtectedRoute } from "./components/ProtectedRoute";
 import { Landing } from "./pages/Landing";
 import { Home } from "./pages/Home";
 import { Shop } from "./pages/Shop";
@@ -13,13 +12,36 @@ import { Checkout } from "./pages/Checkout";
 import { About } from "./pages/About";
 import { Compare } from "./pages/Compare";
 import { useAuth } from "./store/authStore";
+import { useInitializeAuth } from "./hooks/useInitializeAuth";
 
 type RootContext = { searchQuery: string };
 
 function RootLayout() {
+  const { isAuthenticated, isInitializing } = useAuth();
   const [cartOpen, setCartOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Initialize auth on root mount
+  useInitializeAuth();
+
+  // Show loading state while initializing
+  if (isInitializing) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-white">
+        <div className="text-center">
+          <div className="animate-spin w-12 h-12 border-4 border-gray-300 border-t-blue-500 rounded-full mx-auto mb-4"></div>
+          <p className="text-gray-500">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // If not authenticated, show landing page
+  if (!isAuthenticated) {
+    return <Outlet />;
+  }
+
+  // If authenticated, show app layout
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Navbar
@@ -38,102 +60,28 @@ function RootLayout() {
 
 function ShopWrapper() {
   const { searchQuery } = useOutletContext<RootContext>();
-  return (
-    <ProtectedRoute>
-      <Shop searchQuery={searchQuery} />
-    </ProtectedRoute>
-  );
-}
-
-function PublicRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, isInitializing } = useAuth();
-
-  if (isInitializing) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin">
-          <div className="w-8 h-8 border-4 border-gray-300 border-t-blue-500 rounded-full"></div>
-        </div>
-      </div>
-    );
-  }
-
-  // If user is authenticated, redirect to home
-  if (isAuthenticated) {
-    return <Navigate to="/home" replace />;
-  }
-
-  return <>{children}</>;
+  return <Shop searchQuery={searchQuery} />;
 }
 
 export const router = createBrowserRouter([
-  // Public route - Landing page
   {
     path: "/",
-    element: (
-      <PublicRoute>
-        <Landing />
-      </PublicRoute>
-    ),
-  },
-
-  // Protected app routes
-  {
-    path: "/home",
-    element: (
-      <ProtectedRoute>
-        <RootLayout />
-      </ProtectedRoute>
-    ),
+    element: <RootLayout />,
     children: [
-      { index: true, Component: Home },
-      { path: "shop", Component: ShopWrapper },
-      {
-        path: "product/:id",
-        element: (
-          <ProtectedRoute>
-            <ProductDetail />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "wishlist",
-        element: (
-          <ProtectedRoute>
-            <Wishlist />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "checkout",
-        element: (
-          <ProtectedRoute>
-            <Checkout />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "about",
-        element: (
-          <ProtectedRoute>
-            <About />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "compare",
-        element: (
-          <ProtectedRoute>
-            <Compare />
-          </ProtectedRoute>
-        ),
-      },
-    ],
-  },
+      // Landing page - public route
+      { index: true, element: <Landing /> },
 
-  // Catch-all redirect
-  {
-    path: "*",
-    element: <Navigate to="/" replace />,
+      // Protected app routes
+      { path: "home", element: <Home /> },
+      { path: "home/shop", element: <ShopWrapper /> },
+      { path: "home/product/:id", element: <ProductDetail /> },
+      { path: "home/wishlist", element: <Wishlist /> },
+      { path: "home/checkout", element: <Checkout /> },
+      { path: "home/about", element: <About /> },
+      { path: "home/compare", element: <Compare /> },
+
+      // Catch-all redirect
+      { path: "*", element: <Navigate to="/" replace /> },
+    ],
   },
 ]);
