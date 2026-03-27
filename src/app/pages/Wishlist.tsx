@@ -30,7 +30,7 @@ export function Wishlist() {
               <p className="text-sm text-gray-400 mt-1">Save items you love to your wishlist</p>
             </div>
             <Link
-              to="/shop"
+              to="/home/shop"
               className="bg-[#099EE9] text-white px-6 py-2.5 rounded-full text-sm hover:bg-gray-800 transition"
               style={{ fontWeight: 600 }}
             >

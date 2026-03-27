@@ -17,7 +17,7 @@ export function ProductDetail() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <p className="text-gray-500">Product not found.</p>
-          <Link to="/shop" className="mt-4 inline-block text-black underline text-sm">Back to Shop</Link>
+          <Link to="/home/shop" className="mt-4 inline-block text-black underline text-sm">Back to Shop</Link>
         </div>
       </div>
     );
@@ -37,7 +37,7 @@ export function ProductDetail() {
     <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Breadcrumb */}
-        <Link to="/shop" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-black transition mb-8">
+        <Link to="/home/shop" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-black transition mb-8">
           <ArrowLeft size={16} />
           Back to Shop
         </Link>

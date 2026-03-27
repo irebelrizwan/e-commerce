@@ -116,7 +116,7 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
               </div>
             </div>
             <Link
-              to="/checkout"
+              to="/home/checkout"
               onClick={onClose}
               className="block w-full bg-[#099EE9] text-white text-center py-3.5 rounded-full hover:bg-gray-800 transition text-sm"
               style={{ fontWeight: 600 }}

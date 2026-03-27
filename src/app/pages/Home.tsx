@@ -107,14 +107,14 @@ const prevSlide = () => {
 
     <div className="flex justify-center gap-4">
       <Link
-        to="/shop"
+        to="/home/shop"
         className="bg-white text-black px-6 py-3 rounded-full text-sm"
       >
         Shop Now
       </Link>
 
       <Link
-        to="/about"
+        to="/home/about"
         className="border border-white/20 px-6 py-3 rounded-full text-sm"
       >
         Learn More
@@ -135,7 +135,7 @@ const prevSlide = () => {
           {["Electronics", "Footwear", "Clothing", "Accessories", "Bags", "Beauty"].map((cat) => (
             <Link
               key={cat}
-              to={`/shop?category=${cat}`}
+              to={`/home/shop?category=${cat}`}
               className="flex flex-col items-center gap-2 p-4 bg-gray-50 rounded-2xl hover:bg-[#099EE9] hover:text-white transition-all duration-200 group text-center"
             >
               <span className="text-sm group-hover:text-white text-gray-700" style={{ fontWeight: 500 }}>
@@ -155,7 +155,7 @@ const prevSlide = () => {
               Featured Products
             </h2>
             <Link
-              to="/shop"
+              to="/home/shop"
               className="flex items-center gap-1 text-sm text-gray-500 hover:text-black transition"
             >
               View all <ArrowRight size={15} />
@@ -202,7 +202,7 @@ const prevSlide = () => {
 
       {/* Button */}
       <Link
-        to="/shop"
+        to="/home/shop"
         className="relative z-10 shrink-0 bg-white text-black px-8 py-3.5 rounded-full text-sm hover:bg-gray-100 transition font-semibold"
       >
         Shop the Sale

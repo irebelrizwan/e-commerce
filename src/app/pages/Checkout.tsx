@@ -47,7 +47,7 @@ export function Checkout() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <Link to="/shop" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-black transition mb-8">
+        <Link to="/home/shop" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-black transition mb-8">
           <ArrowLeft size={16} />
           Continue Shopping
         </Link>

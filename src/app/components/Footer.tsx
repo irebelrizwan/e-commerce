@@ -30,7 +30,7 @@ export function Footer() {
             <ul className="space-y-2.5 text-sm">
               {["All Products", "Electronics", "Clothing", "Accessories"].map((item) => (
                 <li key={item}>
-                  <Link to="/shop" className="hover:text-white transition">{item}</Link>
+                  <Link to="/home/shop" className="hover:text-white transition">{item}</Link>
                 </li>
               ))}
             </ul>
@@ -41,7 +41,7 @@ export function Footer() {
             <ul className="space-y-2.5 text-sm">
               {["About Us", "Careers", "Contact", "Privacy Policy"].map((item) => (
                 <li key={item}>
-                  <Link to="/about" className="hover:text-white transition">{item}</Link>
+                  <Link to="/home/about" className="hover:text-white transition">{item}</Link>
                 </li>
               ))}
             </ul>
