@@ -46,7 +46,7 @@ const prevSlide = () => {
     image: products[2].image
   }
 ];
-  const featured = products.slice(0, 16);
+  const featured = products.slice(0, 12);
 
   return (
     <div>

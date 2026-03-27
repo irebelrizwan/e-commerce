@@ -9,6 +9,7 @@ import { ProductDetail } from "./pages/ProductDetail";
 import { Wishlist } from "./pages/Wishlist";
 import { Checkout } from "./pages/Checkout";
 import { About } from "./pages/About";
+import { Compare } from "./pages/Compare"; // ✅ added
 
 type RootContext = { searchQuery: string };
 
@@ -48,6 +49,9 @@ export const router = createBrowserRouter([
       { path: "wishlist", Component: Wishlist },
       { path: "checkout", Component: Checkout },
       { path: "about", Component: About },
+
+      // ✅ ADD THIS LINE
+      { path: "compare", Component: Compare },
     ],
   },
 ]);

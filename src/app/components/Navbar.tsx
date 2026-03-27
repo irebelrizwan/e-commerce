@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router";
-import { ShoppingCart, Heart, Search, Menu, X, Zap, User, LogOut, ChevronDown } from "lucide-react";
+import { ShoppingCart, Heart, Search, Menu, X, ChevronDown } from "lucide-react";
 import { useCart } from "../store/cartStore";
 import { useAuth } from "../store/authStore";
 import { AuthModal } from "./AuthModal";
+import { products } from "../data/products";
 
 import logo from "./photos/elogo.png";
 
@@ -16,14 +17,18 @@ interface NavbarProps {
 export function Navbar({ onCartOpen, searchQuery, onSearchChange }: NavbarProps) {
   const { cartCount, wishlist } = useCart();
   const { user, logout } = useAuth();
+
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
   const [authModal, setAuthModal] = useState<{ open: boolean; mode: "login" | "register" }>({ open: false, mode: "login" });
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
   const location = useLocation();
   const userMenuRef = useRef<HTMLDivElement>(null);
 
-  // Close user dropdown on outside click
+  // Close user dropdown
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
@@ -34,138 +39,145 @@ export function Navbar({ onCartOpen, searchQuery, onSearchChange }: NavbarProps)
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  // 🔥 Live search logic
+  useEffect(() => {
+    if (searchQuery.trim() === "") {
+      setFilteredProducts([]);
+      return;
+    }
+
+    const results = products.filter((p) =>
+      p.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    setFilteredProducts(results.slice(0, 5));
+  }, [searchQuery]);
+
   const navLinks = [
     { label: "Home", to: "/" },
     { label: "Shop", to: "/shop" },
+    { label: "Compare", to: "/compare" },
     { label: "About", to: "/about" },
   ];
-     
+
   return (
     <>
-      <nav className="sticky top-0 z-50 bg-white border-b-5 border-[#099EE9] shadow-sm">
+      {/* 🔥 MODERN NAVBAR */}
+      <nav className="sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <Link to="/" className="flex items-center">
-              <img src={logo} alt="Origin E-Commerce" className="h-26 w-auto paddingtop-20" />
-            </Link>
 
-            {/* Desktop Nav */}
-            <div className="hidden md:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  className={`text-sm transition-colors ${
-                    location.pathname === link.to
-                      ? "text-black border-b-2 border-[#099EE9] pb-0.5"
-                      : "text-gray-500 hover:text-black"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
+          <div className="flex items-center h-20">
+
+            {/* LEFT */}
+            <div className="flex items-center gap-8 flex-shrink-0">
+              <Link to="/">
+                <img
+                  src={logo}
+                  alt="Origin"
+                  className="h-14 md:h-16 w-auto object-contain"
+                />
+              </Link>
+
+              <div className="hidden md:flex items-center gap-6 whitespace-nowrap">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.to}
+                    to={link.to}
+                    className={`text-sm px-2 py-1 rounded-md transition-all ${
+                      location.pathname === link.to
+                        ? "text-[#099EE9] bg-blue-50"
+                        : "text-gray-600 hover:text-[#099EE9] hover:bg-blue-50"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
             </div>
 
-            {/* Search bar (desktop) */}
-            
-              
-            <div className="flex items-center bg-gray-100 rounded-full px-4 py-2 w-full max-w-xl shadow-sm focus-within:ring-2 focus-within:ring-[#099EE9] transition">
-              <Search size={18} className="text-gray-500 mr-2" />
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(e) => onSearchChange(e.target.value)}
-                className="bg-transparent text-sm outline-none w-full text-gray-700 placeholder-gray-400"
-              />
+            {/* CENTER SEARCH */}
+            <div className="relative flex-1 flex justify-center px-4">
+              <div className="flex items-center bg-gray-100 rounded-full px-4 py-2 w-full max-w-md">
+                <Search size={18} className="text-gray-500 mr-2" />
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={(e) => {
+                    onSearchChange(e.target.value);
+                    setShowSuggestions(true);
+                  }}
+                  onFocus={() => setShowSuggestions(true)}
+                  onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                  className="bg-transparent text-sm outline-none w-full"
+                />
+              </div>
+
+              {/* 🔥 LIVE SEARCH DROPDOWN */}
+              {showSuggestions && filteredProducts.length > 0 && (
+                <div className="absolute top-full mt-2 w-full max-w-md bg-white border border-gray-200 rounded-xl shadow-lg z-50 overflow-hidden">
+                  {filteredProducts.map((product) => (
+                    <Link
+                      key={product.id}
+                      to={`/product/${product.id}`}
+                      className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50"
+                    >
+                      <img src={product.image} className="w-8 h-8 rounded object-cover" />
+                      <span className="text-sm">{product.name}</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
-        
 
-            {/* Right icons */}
-            <div className="flex items-center gap-1">
-              {/* Mobile search toggle */}
-              <button
-                className="md:hidden p-2 rounded-full hover:bg-gray-100 transition"
-                onClick={() => setSearchOpen(!searchOpen)}
-              >
-                <Search size={20} className="text-gray-700" />
-              </button>
+            {/* RIGHT */}
+            <div className="flex items-center gap-2 flex-shrink-0 whitespace-nowrap">
 
-              <Link to="/wishlist" className="relative p-2 rounded-full hover:bg-gray-100 transition">
-                <Heart size={20} className="text-gray-700" />
+              <Link to="/wishlist" className="relative p-2">
+                <Heart size={20} />
                 {wishlist.length > 0 && (
-                  <span className="absolute top-0 right-0 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
+                  <span className="absolute top-0 right-0 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
                     {wishlist.length}
                   </span>
                 )}
               </Link>
 
-              <button
-                onClick={onCartOpen}
-                className="relative p-2 rounded-full hover:bg-gray-100 transition"
-              >
-                <ShoppingCart size={20} className="text-gray-700" />
+              <button onClick={onCartOpen} className="relative p-2">
+                <ShoppingCart size={20} />
                 {cartCount > 0 && (
-                  <span className="absolute top-0 right-0 bg-black text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
+                  <span className="absolute top-0 right-0 bg-black text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
                     {cartCount}
                   </span>
                 )}
               </button>
 
-              {/* Auth — desktop */}
-              <div className="hidden md:flex items-center gap-2 ml-1">
+              {/* AUTH */}
+              <div className="hidden md:flex items-center gap-2 whitespace-nowrap">
                 {user ? (
                   <div className="relative" ref={userMenuRef}>
                     <button
                       onClick={() => setUserMenuOpen(!userMenuOpen)}
-                      className="flex items-center gap-1.5 pl-3 pr-2 py-1.5 rounded-full border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition"
+                      className="flex items-center gap-2 px-3 py-1.5 rounded-full border"
                     >
-                      <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center">
-                        <span className="text-white text-[10px]" style={{ fontWeight: 700 }}>
-                          {user.name.charAt(0).toUpperCase()}
-                        </span>
+                      <div className="w-6 h-6 bg-black text-white flex items-center justify-center rounded-full text-xs">
+                        {user.name.charAt(0)}
                       </div>
-                      <span className="text-sm text-gray-700 max-w-[80px] truncate" style={{ fontWeight: 500 }}>
-                        {user.name.split(" ")[0]}
-                      </span>
-                      <ChevronDown size={13} className={`text-gray-400 transition-transform ${userMenuOpen ? "rotate-180" : ""}`} />
+                      <span className="text-sm">{user.name.split(" ")[0]}</span>
+                      <ChevronDown size={14} />
                     </button>
-
-                    {userMenuOpen && (
-                      <div className="absolute right-0 top-full mt-2 w-52 bg-white border border-gray-100 rounded-2xl shadow-lg py-1.5 z-50">
-                        <div className="px-4 py-3 border-b border-gray-100">
-                          <p className="text-sm text-gray-900" style={{ fontWeight: 600 }}>{user.name}</p>
-                          <p className="text-xs text-gray-400 truncate mt-0.5">{user.email}</p>
-                        </div>
-                        <Link
-                          to="/wishlist"
-                          onClick={() => setUserMenuOpen(false)}
-                          className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 transition"
-                        >
-                          <Heart size={14} /> Wishlist
-                        </Link>
-                        <button
-                          onClick={() => { logout(); setUserMenuOpen(false); }}
-                          className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition"
-                        >
-                          <LogOut size={14} /> Sign Out
-                        </button>
-                      </div>
-                    )}
                   </div>
                 ) : (
                   <>
                     <button
                       onClick={() => setAuthModal({ open: true, mode: "login" })}
-                      className="text-sm text-gray-600 hover:text-black px-3 py-1.5 rounded-full hover:bg-gray-100 transition"
+                      className="text-sm px-3 py-1.5 whitespace-nowrap"
                     >
                       Sign In
                     </button>
+
                     <button
                       onClick={() => setAuthModal({ open: true, mode: "register" })}
-                      className="text-sm text-white bg-[#099EE9] px-4 py-1.5 rounded-full hover:bg-[#0B7FC6] transition"
-                      style={{ fontWeight: 600 }}
+                      className="text-sm bg-[#099EE9] text-white px-4 py-1.5 rounded-full whitespace-nowrap"
                     >
                       Register
                     </button>
@@ -173,86 +185,13 @@ export function Navbar({ onCartOpen, searchQuery, onSearchChange }: NavbarProps)
                 )}
               </div>
 
-              {/* Mobile menu toggle */}
-              <button
-                className="md:hidden p-2 rounded-full hover:bg-gray-100 transition"
-                onClick={() => setMobileOpen(!mobileOpen)}
-              >
+              {/* MOBILE MENU */}
+              <button className="md:hidden p-2" onClick={() => setMobileOpen(!mobileOpen)}>
                 {mobileOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
             </div>
+
           </div>
-
-          {/* Mobile search */}
-          {searchOpen && (
-            <div className="md:hidden pb-3">
-              <div className="flex items-center bg-gray-100 rounded-full px-4 py-2">
-                <Search size={15} className="text-gray-400 mr-2 shrink-0" />
-                <input
-                  type="text"
-                  placeholder="Search products..."
-                  value={searchQuery}
-                  onChange={(e) => onSearchChange(e.target.value)}
-                  className="bg-transparent text-sm outline-none w-full"
-                  autoFocus
-                />
-              </div>
-            </div>
-          )}
-
-          {/* Mobile menu */}
-          {mobileOpen && (
-            <div className="md:hidden border-t border-gray-100 py-4 space-y-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  className="block px-2 py-2 text-sm text-gray-700 hover:text-black hover:bg-gray-50 rounded-lg"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <div className="border-t border-gray-100 pt-3 mt-2 space-y-1">
-                {user ? (
-                  <>
-                    <div className="flex items-center gap-2.5 px-2 py-2">
-                      <div className="w-7 h-7 bg-black rounded-full flex items-center justify-center">
-                        <span className="text-white text-xs" style={{ fontWeight: 700 }}>
-                          {user.name.charAt(0).toUpperCase()}
-                        </span>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-900" style={{ fontWeight: 600 }}>{user.name}</p>
-                        <p className="text-xs text-gray-400">{user.email}</p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => { logout(); setMobileOpen(false); }}
-                      className="flex items-center gap-2 w-full px-2 py-2 text-sm text-red-500 hover:bg-red-50 rounded-lg transition"
-                    >
-                      <LogOut size={15} /> Sign Out
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      onClick={() => { setAuthModal({ open: true, mode: "login" }); setMobileOpen(false); }}
-                      className="flex items-center gap-2 w-full px-2 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition"
-                    >
-                      <User size={15} /> Sign In
-                    </button>
-                    <button
-                      onClick={() => { setAuthModal({ open: true, mode: "register" }); setMobileOpen(false); }}
-                      className="flex items-center gap-2 w-full px-2 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition"
-                    >
-                      <User size={15} /> Register
-                    </button>
-                  </>
-                )}
-              </div>
-            </div>
-          )}
         </div>
       </nav>
 
