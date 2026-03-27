@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import { getUserCart, saveUserCart, clearUserCart } from "../utils/cartPersistence";
 
 export interface Product {
   id: number;
@@ -20,6 +21,7 @@ export interface CartItem extends Product {
 interface CartContextType {
   cart: CartItem[];
   wishlist: number[];
+  currentUserId: string | null;
   addToCart: (product: Product) => void;
   removeFromCart: (id: number) => void;
   updateQuantity: (id: number, quantity: number) => void;
@@ -28,6 +30,9 @@ interface CartContextType {
   cartTotal: number;
   clearCart: () => void;
   setUserCart: (cart: CartItem[], wishlist: number[]) => void;
+  loadUserCart: (userId: string) => void;
+  saveCurrentCart: () => void;
+  clearUserCartData: (userId: string) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -38,6 +43,7 @@ const WISHLIST_KEY = "user_wishlist";
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<number[]>([]);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
   // Load cart from localStorage on mount
   useEffect(() => {
@@ -55,7 +61,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   // Save cart to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
-  }, [cart]);
+
+    // Also save to per-user database if user is logged in
+    if (currentUserId) {
+      saveUserCart(currentUserId, cart, wishlist);
+    }
+  }, [cart, currentUserId, wishlist]);
 
   // Save wishlist to localStorage whenever it changes
   useEffect(() => {
@@ -107,9 +118,49 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setWishlist(newWishlist);
   };
 
+  // Load user's cart from database
+  const loadUserCart = (userId: string) => {
+    setCurrentUserId(userId);
+    const { items, wishlist: savedWishlist } = getUserCart(userId);
+    setCart(items);
+    setWishlist(savedWishlist);
+  };
+
+  // Save current cart to database
+  const saveCurrentCart = () => {
+    if (currentUserId) {
+      saveUserCart(currentUserId, cart, wishlist);
+    }
+  };
+
+  // Clear user's cart from database
+  const clearUserCartData = (userId: string) => {
+    clearUserCart(userId);
+    if (currentUserId === userId) {
+      setCurrentUserId(null);
+      setCart([]);
+      setWishlist([]);
+    }
+  };
+
   return (
     <CartContext.Provider
-      value={{ cart, wishlist, addToCart, removeFromCart, updateQuantity, toggleWishlist, cartCount, cartTotal, clearCart, setUserCart }}
+      value={{
+        cart,
+        wishlist,
+        currentUserId,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        toggleWishlist,
+        cartCount,
+        cartTotal,
+        clearCart,
+        setUserCart,
+        loadUserCart,
+        saveCurrentCart,
+        clearUserCartData,
+      }}
     >
       {children}
     </CartContext.Provider>

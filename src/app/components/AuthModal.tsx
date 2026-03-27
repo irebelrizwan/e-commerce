@@ -49,7 +49,7 @@ export function AuthModal({ open, mode, onClose, onSwitchMode }: AuthModalProps)
   if (!open) return null;
 
   const inputClass =
-    "w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-black transition placeholder-gray-400";
+    "w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 outline-none focus:border-black focus:ring-2 focus:ring-blue-100 transition placeholder-gray-500 bg-white hover:bg-gray-50";
 
   return (
     <>

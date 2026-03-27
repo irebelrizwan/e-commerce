@@ -15,7 +15,7 @@ interface NavbarProps {
 }
 
 export function Navbar({ onCartOpen, searchQuery, onSearchChange }: NavbarProps) {
-  const { cartCount, wishlist, clearCart } = useCart();
+  const { cartCount, wishlist } = useCart();
   const { user, logout: authLogout } = useAuth();
 
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -28,10 +28,9 @@ export function Navbar({ onCartOpen, searchQuery, onSearchChange }: NavbarProps)
   const location = useLocation();
   const userMenuRef = useRef<HTMLDivElement>(null);
 
-  // Handle logout - clear auth and cart
+  // Handle logout - auth state change triggers cart sync
   const handleLogout = () => {
     authLogout();
-    clearCart();
     setUserMenuOpen(false);
   };
 
